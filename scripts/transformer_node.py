@@ -2,6 +2,7 @@
 
 import rospy
 import tf2_ros
+import tf2_geometry_msgs
 from geometry_msgs.msg import TransformStamped, PoseStamped
 from nav_msgs.msg import Odometry
 from tf.transformations import euler_from_quaternion, quaternion_from_euler, quaternion_inverse
@@ -9,9 +10,11 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler, qua
 def pose_callback(pose_msg):
     global tf_buffer, pose_pub
 
+    newPose = pose_msg
+
     try:
         # Transform the pose from world frame to vicon/world frame
-        transformed_pose = tf_buffer.transform(pose_msg, 'vicon/world', rospy.Duration(1.0))
+        transformed_pose = tf_buffer.transform(newPose, 'vicon/world', rospy.Duration(1.0))
 
         new_pose_msg = PoseStamped()
 
@@ -43,7 +46,7 @@ def odom_callback(odom_msg):
 
     # Populate the transform message
     transform.header.stamp = rospy.Time.now()
-    transform.header.frame_id = 'vicon/hololens/hololens'  # Parent frame ID
+    transform.header.frame_id = 'vicon/world'  # Parent frame ID
     transform.child_frame_id = 'world'  # Child frame ID
 
     # Get the pose from odometry message
@@ -82,7 +85,10 @@ def main():
     # Initialize the publisher for transformed poses
     pose_pub = rospy.Publisher('transformed_pose', PoseStamped, queue_size=10)
 
+    # Subscribing the PLayer odom in 'world' frame
     rospy.Subscriber('/Player0/head/odom', Odometry, odom_callback)
+
+    # # subscribing the tello command pose in 'world' frame
     rospy.Subscriber('/tello/command_pos_world', PoseStamped, pose_callback)
 
 
@@ -92,6 +98,7 @@ def main():
         try:
             # Lookup the transformation from world to vicon/world
             trans = tf_buffer.lookup_transform('vicon/world', 'world', rospy.Time())
+
             rospy.loginfo("Transformation of the world frame with respect to vicon/world: %s", trans)
             # Process the transform as needed
             # ...
