@@ -16,17 +16,7 @@
           output="screen">
     </node>
     
-    <node pkg="aruco_ros" type="single" name="aruco_hl2">
-        <remap from="/camera_info" to="/Player0/camera/camera_info" />
-        <remap from="/image" to="/Player0/camera/uncompressed" />
-        <param name="image_is_rectified" value="True"/>
-        <param name="marker_size"        value="$(arg markerSize)"/>
-        <param name="marker_id"          value="$(arg markerId)"/>
-        <param name="reference_frame"    value="$(arg ref_frame)"/>   <!-- frame in which the marker pose will be refered -->
-        <param name="camera_frame"       value="hl2_camera_frame"/>
-        <param name="marker_frame"       value="$(arg marker_frame)" />
-        <param name="corner_refinement"  value="$(arg corner_refinement)" />
-    </node>
+
 
     <node pkg="aruco_ros" type="single" name="aruco_drone">
         <remap from="/camera_info" to="/camera/camera_info" />
