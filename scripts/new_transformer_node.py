@@ -5,6 +5,9 @@ import tf
 from geometry_msgs.msg import PoseStamped, TransformStamped
 import tf.transformations as tf_trans
 
+# Node to subscribe to the aruco_marker_frame's pose wrt to the base_link of the drone
+# And invert it to publish the drone's base_link pose wrt to the aruco marker
+
 def pose_callback(msg):
     # Get the pose from the message
     marker_pose = msg.pose
