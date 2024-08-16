@@ -17,7 +17,7 @@
           output="screen">
     </node>
 
-    <node pkg="pose_transformer" type="new_transformer_node.py" name="transformer_node" output="screen"/>
+    <node pkg="pose_transformer" type="new2_transformer_node.py" name="transformer_node" output="screen"/>
 
     <node pkg="aruco_ros" type="single" name="aruco_hl2">
         <remap from="/camera_info" to="/Player0/camera/camera_info/updated" />
