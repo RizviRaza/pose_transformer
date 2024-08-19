@@ -13,13 +13,17 @@ aruco_hl2_transform = None
 hl2_pose_transform = None
 goal_pose_transform = None
 
+# Updates the D and P matrix values of the HL2 Camera Info topic
+# Publishes on a new topic then
 def camera_info_callback(camera_info_msg):
     camera_info_msg.D = [0.0355633167278393, -0.123584193169489, -0.000250953321849423, -0.000181034148553509, 0.155155222181198]
     camera_info_msg.P = [2992.533447265625, 0.0, 1917.8743896484375, 0.0, 0.0, 2994.665771484375, 1038.7142333984375, 0.0, 0.0, 0.0, 1.0, 0.0]
     hl2_camera_info_pub.publish(camera_info_msg)
     print("hl2 camera info published")
 
-def pose_callback(msg):
+# Subscribes to the aruco_drone pose topic
+# Inverts and saves the aruco_marker_frame -> drone transform
+def aruco_drone_pose_callback(msg):
     global aruco_drone_transform
 
     marker_pose = msg.pose
@@ -34,6 +38,8 @@ def pose_callback(msg):
     aruco_drone_transform = tf_trans.inverse_matrix(marker_transform)
     print("aruco-base_link transform recorded")
 
+# Subscribes to the /Player0/camera/pose topic
+# Saves the map -> hl2 transform
 def hl2_pose_callback(msg):
     global hl2_pose_transform
 
@@ -47,6 +53,8 @@ def hl2_pose_callback(msg):
     )
     print("map-hl2 transform recorded")
 
+# Subscribes to the /tello/command_pos_world topic
+# Saves the map -> goal transform
 def goal_pose_callback(msg):
     global goal_pose_transform
 
@@ -61,6 +69,8 @@ def goal_pose_callback(msg):
 
     print("map-goal transform recorded")
 
+# Subscribes to the aruco_hl2 pose topic
+# Saves the hl2 -> aruco_marker_frame transform
 def aruco_hl2_pose_callback(msg):
     global aruco_hl2_transform
 
@@ -139,7 +149,7 @@ if __name__ == '__main__':
     hl2_camera_info_pub = rospy.Publisher('/Player0/camera/camera_info/updated', CameraInfo, queue_size=10)
     rospy.Subscriber('/Player0/camera/camera_info', CameraInfo, camera_info_callback) 
     
-    rospy.Subscriber('/aruco_drone/pose', PoseStamped, pose_callback)
+    rospy.Subscriber('/aruco_drone/pose', PoseStamped, aruco_drone_pose_callback)
     rospy.Subscriber('/aruco_hl2/pose', PoseStamped, aruco_hl2_pose_callback)
     
     rospy.Subscriber('/Player0/camera/pose', PoseStamped, hl2_pose_callback)
