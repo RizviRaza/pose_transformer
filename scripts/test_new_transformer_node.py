@@ -16,6 +16,7 @@ aruco_hl2_transform = None
 hl2_pose_transform = None
 goal_pose_transform = None
 
+tf_broadcaster = tf.TransformBroadcaster()
 
 def ros_to_cv_pose_stamped(ros_pose_stamped):
     # Create a new PoseStamped message
@@ -83,10 +84,26 @@ def aruco_drone_pose_callback(msg):
     )
     
     aruco_drone_transform = tf_trans.inverse_matrix(marker_transform)
-    print("aruco-base_link transform recorded")
+
+
+    # Extract the translation and rotation from the inverse transformation matrix
+    aruco_drone_translation = tf_trans.translation_from_matrix(aruco_drone_transform)
+    aruco_drone_rotation = tf_trans.quaternion_from_matrix(aruco_drone_transform)
+
+    # Broadcast the inverse transform
+    tf_broadcaster.sendTransform(
+        aruco_drone_translation,
+        aruco_drone_rotation,
+        msg.header.stamp,
+        "base_link",  # The child frame
+        "aruco"       # The parent frame
+    )
+
+    print("aruco-base_link transform recorded & published")
 
 # Subscribes to the /Player0/camera/pose topic
 # Saves the map -> hl2 transform
+# Broadcasts
 def hl2_pose_callback(msg):
     global hl2_pose_transform
 
@@ -99,11 +116,44 @@ def hl2_pose_callback(msg):
     hl2_position = (hl2_pose.position.x, hl2_pose.position.y, hl2_pose.position.z)
     hl2_orientation = (hl2_pose.orientation.x, hl2_pose.orientation.y, hl2_pose.orientation.z, hl2_pose.orientation.w)
 
+    # hl2_position = (hl2_pose.position.z, -hl2_pose.position.x, -hl2_pose.position.y)
+    # hl2_orientation = (hl2_pose.orientation.x, hl2_pose.orientation.y, hl2_pose.orientation.z, hl2_pose.orientation.w)
+
+
     hl2_pose_transform = tf_trans.concatenate_matrices(
         tf_trans.translation_matrix(hl2_position),
         tf_trans.quaternion_matrix(hl2_orientation)
     )
-    print("map-hl2 transform recorded")
+
+    # Extract the translation and rotation from the transformation matrix
+    hl2_translation = tf_trans.translation_from_matrix(hl2_pose_transform)
+    hl2_rotation = tf_trans.quaternion_from_matrix(hl2_pose_transform)
+
+    # Broadcast the transform
+    tf_broadcaster.sendTransform(
+        hl2_translation,
+        hl2_rotation,
+        msg.header.stamp,
+        "hl2_frame",  # The child frame
+        "map"         # The parent frame
+    )
+
+    print("map-hl2 transform recorded & broadcasted")
+    
+    # if goal_pose_transform is not None:
+
+    #     # Extract the translation and rotation from the transformation matrix
+    #     goal_translation = tf_trans.translation_from_matrix(goal_pose_transform)
+    #     goal_rotation = tf_trans.quaternion_from_matrix(goal_pose_transform)
+
+    #     # Broadcast the transform
+    #     tf_broadcaster.sendTransform(
+    #         goal_translation,
+    #         goal_rotation,
+    #         msg.header.stamp,
+    #         "goal_frame",  # The child frame
+    #         "map"          # The parent frame
+    #     )
 
 # Subscribes to the /tello/command_pos_world topic
 # Saves the map -> goal transform
@@ -124,7 +174,21 @@ def goal_pose_callback(msg):
         tf_trans.quaternion_matrix(goal_orientation)
     )
 
-    print("map-goal transform recorded")
+
+    # Extract the translation and rotation from the transformation matrix
+    goal_translation = tf_trans.translation_from_matrix(goal_pose_transform)
+    goal_rotation = tf_trans.quaternion_from_matrix(goal_pose_transform)
+
+    # Broadcast the transform
+    tf_broadcaster.sendTransform(
+        goal_translation,
+        goal_rotation,
+        msg.header.stamp,
+        "goal_frame",  # The child frame
+        "map"          # The parent frame
+    )
+
+    print("map-goal transform recorded & published")
 
 # Subscribes to the aruco_hl2 pose topic
 # Saves the hl2 -> aruco_marker_frame transform
@@ -140,7 +204,19 @@ def aruco_hl2_pose_callback(msg):
         tf_trans.quaternion_matrix(hl2_orientation)
     )
 
-    print("hl2-aruco transform recorded")
+    aruco_hl2_translation = tf_trans.translation_from_matrix(aruco_hl2_transform)
+    aruco_hl2_rotation = tf_trans.quaternion_from_matrix(aruco_hl2_transform)
+
+    # Broadcast the transform
+    tf_broadcaster.sendTransform(
+        aruco_hl2_translation,
+        aruco_hl2_rotation,
+        msg.header.stamp,
+        "aruco",  # The child frame
+        "hl2_frame"       # The parent frame
+    )
+
+    print("hl2-aruco transform recorded & broadcasted")
 
 def publish_transforms(event):
     print("Checking transforms")
@@ -215,6 +291,6 @@ if __name__ == '__main__':
     tf_pub = rospy.Publisher('/tf', TFMessage, queue_size=10)
 
     # Create a timer to call the publish_transforms method periodically (e.g., every 0.1 seconds)
-    rospy.Timer(rospy.Duration(1.0), publish_transforms)
+    # rospy.Timer(rospy.Duration(1.0), publish_transforms)
 
     rospy.spin()

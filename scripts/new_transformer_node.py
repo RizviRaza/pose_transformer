@@ -156,13 +156,13 @@ if __name__ == '__main__':
     rospy.init_node('drone_pose_with_respect_to_marker')
 
     # Enable use_sim_time parameter
-    rospy.set_param('use_sim_time', True)
+    rospy.set_param('use_sim_time', False)
 
     hl2_camera_info_pub = rospy.Publisher('/Player0/camera/camera_info/updated', CameraInfo, queue_size=10)
     rospy.Subscriber('/Player0/camera/camera_info', CameraInfo, camera_info_callback) 
     
     inverted_pose_pub = rospy.Publisher('/inverted_pose', PoseStamped, queue_size=10)
-    rospy.Subscriber('/aruco_drone/pose', PoseStamped, aruco_drone_pose_callback)
+    rospy.Subscriber('/aruco_drone/pose', PoseStamped, pose_callback)
     rospy.Subscriber('/aruco_hl2/pose', PoseStamped, aruco_hl2_pose_callback)
     
     tf_pub = rospy.Publisher('/tf', TFMessage, queue_size=10)

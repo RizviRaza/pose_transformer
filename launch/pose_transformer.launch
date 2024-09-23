@@ -12,7 +12,9 @@
 
     <param name="/use_sim_time" value="false"/>
 
-  <node pkg="aruco_ros" type="single" name="aruco_drone">
+    <node pkg="pose_transformer" type="new_transformer_node.py" name="transformer_node" output="screen"/>
+
+    <node pkg="aruco_ros" type="single" name="aruco_drone">
         <remap from="/camera_info" to="/camera/camera_info" />
         <remap from="/image" to="/camera/image_raw" />
         <param name="image_is_rectified" value="True"/>

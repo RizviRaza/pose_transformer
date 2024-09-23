@@ -8,13 +8,56 @@ from sensor_msgs.msg import CameraInfo
 from geometry_msgs.msg import PoseStamped, TransformStamped
 from tf2_msgs.msg import TFMessage
 
-## Node that DOES NOT changes the frame convention at all!
+## Node that DOES changes the frame convention at all!
 
 # Variables to store transforms internally
 aruco_drone_transform = None
 aruco_hl2_transform = None
 hl2_pose_transform = None
 goal_pose_transform = None
+
+def cv_to_ros_pose_stamped(cv_pose_stamped):
+    # Create a new PoseStamped message
+    ros_pose_stamped = PoseStamped()
+    
+    # Copy the timestamp and frame_id
+    ros_pose_stamped.header.stamp = cv_pose_stamped.header.stamp
+    ros_pose_stamped.header.frame_id = cv_pose_stamped.header.frame_id  # Assuming it's the same reference frame
+    
+    # Extract position from CV pose
+    cv_position = [
+        cv_pose_stamped.pose.position.x, 
+        cv_pose_stamped.pose.position.y, 
+        cv_pose_stamped.pose.position.z
+    ]
+    
+    # Apply the transformation for position (CV to ROS frame)
+    ros_position = [cv_position[2], -cv_position[0], -cv_position[1]]
+    
+    # Assign the transformed position to the new PoseStamped message
+    ros_pose_stamped.pose.position.x = ros_position[0]
+    ros_pose_stamped.pose.position.y = ros_position[1]
+    ros_pose_stamped.pose.position.z = ros_position[2]
+    
+    # Extract orientation quaternion from CV pose
+    cv_orientation = [
+        cv_pose_stamped.pose.orientation.x, 
+        cv_pose_stamped.pose.orientation.y, 
+        cv_pose_stamped.pose.orientation.z, 
+        cv_pose_stamped.pose.orientation.w
+    ]
+    
+    # Apply the inverse quaternion rotation for orientation
+    inverse_rotation_quat = tf_trans.quaternion_from_euler(0, math.pi / 2, -math.pi / 2)  # Reverse the Z90 and Y-90
+    ros_orientation = tf_trans.quaternion_multiply(inverse_rotation_quat, cv_orientation)
+    
+    # Assign the transformed orientation to the new PoseStamped message
+    ros_pose_stamped.pose.orientation.x = ros_orientation[0]
+    ros_pose_stamped.pose.orientation.y = ros_orientation[1]
+    ros_pose_stamped.pose.orientation.z = ros_orientation[2]
+    ros_pose_stamped.pose.orientation.w = ros_orientation[3]
+    
+    return ros_pose_stamped
 
 
 def ros_to_cv_pose_stamped(ros_pose_stamped):
@@ -73,7 +116,12 @@ def camera_info_callback(camera_info_msg):
 def aruco_drone_pose_callback(msg):
     global aruco_drone_transform
 
-    marker_pose = msg.pose
+    # marker_pose = msg.pose
+
+    ## converting CV to ROS
+
+    marker_pose = cv_to_ros_pose_stamped(msg).pose
+
     marker_position = (marker_pose.position.x, marker_pose.position.y, marker_pose.position.z)
     marker_orientation = (marker_pose.orientation.x, marker_pose.orientation.y, marker_pose.orientation.z, marker_pose.orientation.w)
 
@@ -87,6 +135,7 @@ def aruco_drone_pose_callback(msg):
 
 # Subscribes to the /Player0/camera/pose topic
 # Saves the map -> hl2 transform
+# Follows the ROS frame convention already
 def hl2_pose_callback(msg):
     global hl2_pose_transform
 
@@ -107,6 +156,7 @@ def hl2_pose_callback(msg):
 
 # Subscribes to the /tello/command_pos_world topic
 # Saves the map -> goal transform
+# Follows the ROS frame convention already
 def goal_pose_callback(msg):
     global goal_pose_transform
 
@@ -131,7 +181,12 @@ def goal_pose_callback(msg):
 def aruco_hl2_pose_callback(msg):
     global aruco_hl2_transform
 
-    hl2_pose = msg.pose
+    # hl2_pose = msg.pose
+
+    ## converting CV to ROS
+
+    hl2_pose = cv_to_ros_pose_stamped(msg).pose
+
     hl2_position = (hl2_pose.position.x, hl2_pose.position.y, hl2_pose.position.z)
     hl2_orientation = (hl2_pose.orientation.x, hl2_pose.orientation.y, hl2_pose.orientation.z, hl2_pose.orientation.w)
     
@@ -151,7 +206,9 @@ def publish_transforms(event):
         rospy.loginfo("Publishing transforms")
 
         # Calculate map -> base_link
-        map_to_base_link_transform = tf_trans.concatenate_matrices(hl2_pose_transform, aruco_drone_transform)
+        # map_to_base_link_transform = tf_trans.concatenate_matrices(hl2_pose_transform, aruco_drone_transform)
+
+        map_to_base_link_transform = hl2_pose_transform @ aruco_hl2_transform @ aruco_drone_transform
 
         # Extract the translation and rotation from map -> base_link
         map_to_base_link_translation = tf_trans.translation_from_matrix(map_to_base_link_transform)
