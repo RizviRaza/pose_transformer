@@ -91,15 +91,6 @@ def aruco_drone_pose_callback(msg):
     aruco_drone_translation = tf_trans.translation_from_matrix(aruco_drone_transform)
     aruco_drone_rotation = tf_trans.quaternion_from_matrix(aruco_drone_transform)
 
-    # Broadcast the inverse transform
-    # tf_broadcaster.sendTransform(
-    #     aruco_drone_translation,
-    #     aruco_drone_rotation,
-    #     msg.header.stamp,
-    #     "base_link",  # The child frame
-    #     "aruco"       # The parent frame
-    # )
-
     aruco_drone_transform = {
         "translation": aruco_drone_translation.tolist(),
         "rotation": aruco_drone_rotation.tolist(),
@@ -136,37 +127,11 @@ def hl2_pose_callback(msg):
     hl2_translation = tf_trans.translation_from_matrix(hl2_pose_transform)
     hl2_rotation = tf_trans.quaternion_from_matrix(hl2_pose_transform)
 
-    # Broadcast the transform
-    # tf_broadcaster.sendTransform(
-    #     hl2_translation,
-    #     hl2_rotation,
-    #     msg.header.stamp,
-    #     "hl2_frame",  # The child frame
-    #     "map"         # The parent frame
-    # )
-
     hl2_pose_transform = {
         "translation": hl2_translation.tolist(),
         "rotation": hl2_rotation.tolist(),
         "timestamp": msg.header.stamp.to_sec()
     }
-
-    # print("map-hl2 transform recorded")
-    
-    # if goal_pose_transform is not None:
-
-    #     # Extract the translation and rotation from the transformation matrix
-    #     goal_translation = tf_trans.translation_from_matrix(goal_pose_transform)
-    #     goal_rotation = tf_trans.quaternion_from_matrix(goal_pose_transform)
-
-    #     # Broadcast the transform
-    #     tf_broadcaster.sendTransform(
-    #         goal_translation,
-    #         goal_rotation,
-    #         msg.header.stamp,
-    #         "goal_frame",  # The child frame
-    #         "map"          # The parent frame
-    #     )
 
 # Subscribes to the /tello/command_pos_world topic
 # Saves the map -> goal transform
@@ -192,15 +157,6 @@ def goal_pose_callback(msg):
     goal_translation = tf_trans.translation_from_matrix(goal_pose_transform)
     goal_rotation = tf_trans.quaternion_from_matrix(goal_pose_transform)
 
-    # Broadcast the transform
-    # tf_broadcaster.sendTransform(
-    #     goal_translation,
-    #     goal_rotation,
-    #     msg.header.stamp,
-    #     "goal_frame",  # The child frame
-    #     "map"          # The parent frame
-    # )
-
     goal_pose_transform = {
         "translation": goal_translation.tolist(),
         "rotation": goal_rotation.tolist(),
@@ -225,15 +181,6 @@ def aruco_hl2_pose_callback(msg):
 
     aruco_hl2_translation = tf_trans.translation_from_matrix(aruco_hl2_transform)
     aruco_hl2_rotation = tf_trans.quaternion_from_matrix(aruco_hl2_transform)
-
-    # Broadcast the transform
-    # tf_broadcaster.sendTransform(
-    #     aruco_hl2_translation,
-    #     aruco_hl2_rotation,
-    #     msg.header.stamp,
-    #     "aruco",  # The child frame
-    #     "hl2_frame"       # The parent frame
-    # )
 
     aruco_hl2_transform = {
         "translation": aruco_hl2_translation.tolist(),
@@ -280,10 +227,13 @@ def publish_transforms(event):
         #     tf_trans.inverse_matrix(map_to_goal_matrix)
         # )
 
-        aruco_to_hl2_matrix = np.linalg.inv(hl2_to_aruco_matrix)
+        # aruco_to_hl2_matrix = np.linalg.inv(hl2_to_aruco_matrix)
+        aruco_to_hl2_matrix = tf_trans.inverse_matrix(hl2_to_aruco_matrix)
 
         # Inverse of map -> hl2
-        hl2_to_map_matrix = np.linalg.inv(map_to_hl2_matrix)
+        # hl2_to_map_matrix = np.linalg.inv(map_to_hl2_matrix)
+
+        hl2_to_map_matrix = tf_trans.inverse_matrix(map_to_hl2_matrix)
 
         # Compute aruco -> goal
         aruco_to_goal_matrix = aruco_to_hl2_matrix @ hl2_to_map_matrix @ map_to_goal_matrix
