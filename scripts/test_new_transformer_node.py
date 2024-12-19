@@ -3,6 +3,7 @@
 import rospy
 import tf
 import math
+import numpy as np
 import tf.transformations as tf_trans
 from sensor_msgs.msg import CameraInfo
 from geometry_msgs.msg import PoseStamped, TransformStamped
@@ -273,13 +274,22 @@ def publish_transforms(event):
         )
 
         # Compute aruco -> goal as inverse of hl2 -> aruco multiplied by map -> hl2 and map -> goal
-        aruco_to_goal_matrix = tf_trans.concatenate_matrices(
-            tf_trans.inverse_matrix(hl2_to_aruco_matrix),
-            map_to_hl2_matrix,
-            tf_trans.inverse_matrix(map_to_goal_matrix)
-        )
+        # aruco_to_goal_matrix = tf_trans.concatenate_matrices(
+        #     tf_trans.inverse_matrix(hl2_to_aruco_matrix),
+        #     map_to_hl2_matrix,
+        #     tf_trans.inverse_matrix(map_to_goal_matrix)
+        # )
 
-        # Extract translation and rotation for aruco -> goal
+        aruco_to_hl2_matrix = np.linalg.inv(hl2_to_aruco_matrix)
+
+        # Inverse of map -> hl2
+        hl2_to_map_matrix = np.linalg.inv(map_to_hl2_matrix)
+
+        # Compute aruco -> goal
+        aruco_to_goal_matrix = aruco_to_hl2_matrix @ hl2_to_map_matrix @ map_to_goal_matrix
+
+
+        # # Extract translation and rotation for aruco -> goal
         aruco_goal_translation = tf_trans.translation_from_matrix(aruco_to_goal_matrix)
         aruco_goal_rotation = tf_trans.quaternion_from_matrix(aruco_to_goal_matrix)
 
