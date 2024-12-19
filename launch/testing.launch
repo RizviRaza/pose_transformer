@@ -21,6 +21,7 @@
 
     <!-- <node pkg="pose_transformer" type="frame_conv_transformer_node.py" name="transformer_node" output="screen"/> -->
 
+    <!-- Working -->
     <node pkg="pose_transformer" type="test_new_transformer_node.py" name="transformer_node" output="screen"/>
 
 
