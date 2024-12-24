@@ -17,12 +17,11 @@
           output="screen">
     </node>
 
-    <!-- <node pkg="pose_transformer" type="new2_transformer_node.py" name="transformer_node" output="screen"/> -->
-
-    <!-- <node pkg="pose_transformer" type="frame_conv_transformer_node.py" name="transformer_node" output="screen"/> -->
-
     <!-- Working -->
-    <node pkg="pose_transformer" type="test_new_transformer_node.py" name="transformer_node" output="screen"/>
+    <!--<node pkg="pose_transformer" type="test_new_transformer_node.py" name="transformer_node" output="screen"/> -->
+    
+    <!-- Testing -->
+    <node pkg="pose_transformer" type="test_new_transformer_node_copy.py" name="transformer_node" output="screen"/>
 
     <!-- <node pkg="pose_transformer" type="tf_error_calc.py" name="tf_error_calc_node" output="screen"/> -->
 
