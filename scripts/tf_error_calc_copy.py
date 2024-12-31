@@ -43,7 +43,7 @@ def main():
             t_map_hl2   = tf_buffer.lookup_transform("map",  "hl2",   rospy.Time())
             t_map_goal  = tf_buffer.lookup_transform("map",  "goal",  rospy.Time())
             t_hl2_aruco = tf_buffer.lookup_transform("hl2",  "aruco", rospy.Time())
-            t_aruco_drone = tf_buffer.lookup_transform("aruco", "base_link", rospy.Time())
+            t_aruco_drone = tf_buffer.lookup_transform("aruco", "drone", rospy.Time())
             
             # Convert to 4x4 matrices
             T_map_hl2   = transform_to_matrix(t_map_hl2)
