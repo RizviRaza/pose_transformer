@@ -292,6 +292,23 @@ def publish_transforms(event):
         )
 
         print("hl2 -> goal transforms published")
+
+    if aruco_drone_transform:
+        aruco_to_drone_matrix = tf_trans.concatenate_matrices(
+            tf_trans.translation_matrix(aruco_drone_transform['translation']),
+            tf_trans.quaternion_matrix(aruco_drone_transform['rotation'])
+        )
+        aruco_to_drone_matrix_translation = tf_trans.translation_from_matrix(aruco_to_drone_matrix)
+        aruco_to_drone_matrix_rotation = tf_trans.quaternion_from_matrix(aruco_to_drone_matrix)
+
+        tf_broadcaster.sendTransform(
+            tuple(aruco_to_drone_matrix_translation),  # Translation as a tuple
+            tuple(aruco_to_drone_matrix_rotation),     # Rotation as a tuple
+            rospy.Time.now(),                    # Current time
+            "drone",                         # Child frame
+            "aruco"                              # Parent frame
+        )
+
     else:
         print("Waiting for all required transforms to be available...")
 
