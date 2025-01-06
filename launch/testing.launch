@@ -21,9 +21,11 @@
     <!--<node pkg="pose_transformer" type="test_new_transformer_node.py" name="transformer_node" output="screen"/> -->
     
     <!-- Testing -->
-    <node pkg="pose_transformer" type="test_new_transformer_node_copy.py" name="transformer_node" output="screen"/>
+    <!-- <node pkg="pose_transformer" type="test_new_transformer_node_copy.py" name="transformer_node" output="screen"/> -->
 
     <!-- <node pkg="pose_transformer" type="tf_error_calc.py" name="tf_error_calc_node" output="screen"/> -->
+
+    <node pkg="pose_transformer" type="test_drone_vio_transformer_node.py" name="transformer_node" output="screen"/>
 
     <!-- Leaving reference_frame empty to publish Hl2_camera -> aruco_marker_hl2_frame -->
     <node pkg="aruco_ros" type="single" name="aruco_hl2">

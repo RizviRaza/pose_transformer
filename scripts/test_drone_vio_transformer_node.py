@@ -16,6 +16,7 @@ aruco_drone_transform = None
 aruco_hl2_transform = None
 hl2_pose_transform = None
 goal_pose_transform = None
+drone_pose_transform = None
 map_to_aruco_matrix = None
 
 tf_broadcaster = tf.TransformBroadcaster()
@@ -135,15 +136,53 @@ def hl2_pose_callback(msg):
         "timestamp": msg.header.stamp.to_sec()
     }
 
+    # tf_broadcaster.sendTransform(
+    #         tuple(hl2_translation),  # Translation as a tuple
+    #         tuple(hl2_rotation),     # Rotation as a tuple
+    #         msg.header.stamp,                    # Current time
+    #         "hl2",                         # Child frame
+    #         "map"                              # Parent frame
+    #     )
+
+# Subscribes to the /sentinel/mavros/local_position/pose topic
+# Saves the map -> drone transform
+def drone_pose_callback(msg):
+    # global goal_pose_transform
+
+    global drone_pose_transform, aruco_drone_transform, aruco_hl2_transform, hl2_pose_transform, goal_pose_transform, map_to_aruco_matrix
+
+
+    drone_pose = msg.pose
+
+    drone_position = (drone_pose.position.x, drone_pose.position.y, drone_pose.position.z)
+    drone_orientation = (drone_pose.orientation.x, drone_pose.orientation.y, drone_pose.orientation.z, drone_pose.orientation.w)
+
+    drone_pose_transform = tf_trans.concatenate_matrices(
+        tf_trans.translation_matrix(drone_position),
+        tf_trans.quaternion_matrix(drone_orientation)
+    )
+
+    # Extract the translation and rotation from the transformation matrix
+    drone_translation = tf_trans.translation_from_matrix(drone_pose_transform)
+    drone_rotation = tf_trans.quaternion_from_matrix(drone_pose_transform)
+
+    drone_pose_transform = {
+        "translation": drone_translation.tolist(),
+        "rotation": drone_rotation.tolist(),
+        "timestamp": msg.header.stamp.to_sec()
+    }
+
     tf_broadcaster.sendTransform(
-            tuple(hl2_translation),  # Translation as a tuple
-            tuple(hl2_rotation),     # Rotation as a tuple
+            tuple(drone_translation),  # Translation as a tuple
+            tuple(drone_rotation),     # Rotation as a tuple
             msg.header.stamp,                    # Current time
-            "hl2",                         # Child frame
+            "drone",                         # Child frame
             "map"                              # Parent frame
         )
 
-# Subscribes to the /tello/command_pos_world topic
+    print("map-drone transform recorded")
+
+# Subscribes to the /tello/command_pos topic
 # Saves the map -> goal transform
 def goal_pose_callback(msg):
     # global goal_pose_transform
@@ -172,11 +211,11 @@ def goal_pose_callback(msg):
 
     # trying to convert ros to cv
 
-    goal_translation_backup = goal_translation
+    # goal_translation_backup = goal_translation
 
-    goal_translation[0] = -goal_translation_backup[2]
-    goal_translation[1] = goal_translation_backup[0]
-    goal_translation[2] = goal_translation_backup[1]
+    # goal_translation[0] = -goal_translation_backup[2]
+    # goal_translation[1] = goal_translation_backup[0]
+    # goal_translation[2] = goal_translation_backup[1]
 
     # goal_translation[0] = goal_translation_backup[0]
     # goal_translation[1] = -goal_translation_backup[1]
@@ -189,13 +228,13 @@ def goal_pose_callback(msg):
         "timestamp": msg.header.stamp.to_sec()
     }
 
-    tf_broadcaster.sendTransform(
-            tuple(goal_translation),  # Translation as a tuple
-            tuple(goal_rotation),     # Rotation as a tuple
-            msg.header.stamp,                    # Current time
-            "goal",                         # Child frame
-            "map"                              # Parent frame
-        )
+    # tf_broadcaster.sendTransform(
+    #         tuple(goal_translation),  # Translation as a tuple
+    #         tuple(goal_rotation),     # Rotation as a tuple
+    #         msg.header.stamp,                    # Current time
+    #         "goal",                         # Child frame
+    #         "map"                              # Parent frame
+    #     )
 
     print("map-goal transform recorded")
 
@@ -204,17 +243,12 @@ def publish_transforms(event):
     Publishes the aruco -> goal and aruco -> base_link transforms 
     once all required transforms are available.
     """
-    global aruco_drone_transform, aruco_hl2_transform, hl2_pose_transform, goal_pose_transform, map_to_aruco_matrix
+    global drone_pose_transform, aruco_drone_transform, aruco_hl2_transform, hl2_pose_transform, goal_pose_transform, map_to_aruco_matrix
 
-    if aruco_hl2_transform and hl2_pose_transform and goal_pose_transform:
-        hl2_to_aruco_matrix = tf_trans.concatenate_matrices(
-           tf_trans.translation_matrix(aruco_hl2_transform['translation']),
-            tf_trans.quaternion_matrix(aruco_hl2_transform['rotation'])
-        ) 
-
-        map_to_hl2_matrix = tf_trans.concatenate_matrices(
-            tf_trans.translation_matrix(hl2_pose_transform['translation']),
-            tf_trans.quaternion_matrix(hl2_pose_transform['rotation'])
+    if drone_pose_transform and goal_pose_transform:
+        map_to_drone_matrix = tf_trans.concatenate_matrices(
+            tf_trans.translation_matrix(drone_pose_transform['translation']),
+            tf_trans.quaternion_matrix(drone_pose_transform['rotation'])
         )
 
         map_to_goal_matrix = tf_trans.concatenate_matrices(
@@ -222,24 +256,24 @@ def publish_transforms(event):
             tf_trans.quaternion_matrix(goal_pose_transform['rotation'])
         )
 
-        map_to_aruco_matrix = map_to_hl2_matrix @ hl2_to_aruco_matrix
+        # map_to_aruco_matrix = map_to_hl2_matrix @ hl2_to_aruco_matrix
 
-        aruco_to_map_matrix = tf_trans.inverse_matrix(map_to_aruco_matrix)
+        drone_to_map_matrix = tf_trans.inverse_matrix(map_to_drone_matrix)
 
-        aruco_to_goal_matrix = aruco_to_map_matrix @ map_to_goal_matrix
+        drone_to_goal_matrix = drone_to_map_matrix @ map_to_goal_matrix
 
-        aruco_to_goal_matrix_translation = tf_trans.translation_from_matrix(aruco_to_goal_matrix)
-        aruco_to_goal_matrix_matrix_rotation = tf_trans.quaternion_from_matrix(aruco_to_goal_matrix)
+        drone_to_goal_matrix_translation = tf_trans.translation_from_matrix(drone_to_goal_matrix)
+        drone_to_goal_matrix_matrix_rotation = tf_trans.quaternion_from_matrix(drone_to_goal_matrix)
 
         tf_broadcaster.sendTransform(
-            tuple(aruco_to_goal_matrix_translation),  # Translation as a tuple
-            tuple(aruco_to_goal_matrix_matrix_rotation),     # Rotation as a tuple
+            tuple(drone_to_goal_matrix_translation),  # Translation as a tuple
+            tuple(drone_to_goal_matrix_matrix_rotation),     # Rotation as a tuple
             rospy.Time.now(),                    # Current time
             "goal",                         # Child frame
-            "aruco"                              # Parent frame
+            "drone"                              # Parent frame
         )
 
-        print("aruco -> goal transforms published")
+        print("drone -> goal transforms published")
     else:
         print("Waiting for all required transforms to be available...")
 
@@ -256,11 +290,13 @@ if __name__ == '__main__':
     rospy.Subscriber('/aruco_hl2/pose', PoseStamped, aruco_hl2_pose_callback)
     
     rospy.Subscriber('/Player0/camera/pose', PoseStamped, hl2_pose_callback)
-    rospy.Subscriber('/tello/command_pos_world', PoseStamped, goal_pose_callback)
+    rospy.Subscriber('/tello/command_pos', PoseStamped, goal_pose_callback)
+    rospy.Subscriber('/sentinel/mavros/local_position/pose', PoseStamped, drone_pose_callback)
+
 
     tf_pub = rospy.Publisher('/tf', TFMessage, queue_size=10)
 
     # Create a timer to call the publish_transforms method periodically (e.g., every 0.1 seconds)
-    # rospy.Timer(rospy.Duration(1.0), publish_transforms)
+    rospy.Timer(rospy.Duration(1.0), publish_transforms)
 
     rospy.spin()
