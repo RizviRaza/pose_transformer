@@ -8,7 +8,7 @@
     <!-- <arg name="marker_frame"    default="map"/> -->
     <!-- <arg name="ref_frame"       default=""/>  leave empty and the pose will be published wrt param parent_name -->
 
-    <param name="use_sim_time" value="true"/>
+    <param name="use_sim_time" value="false"/>
 
     <node name="republish_camera_image"
           pkg="image_transport"
@@ -25,7 +25,7 @@
 
     <!-- <node pkg="pose_transformer" type="tf_error_calc.py" name="tf_error_calc_node" output="screen"/> -->
 
-    <node pkg="pose_transformer" type="test_drone_vio_transformer_node.py" name="transformer_node" output="screen"/>
+    <node pkg="pose_transformer" type="test_goal_aruco_pose_node.py" name="transformer_node" output="screen"/>
 
     <!-- Leaving reference_frame empty to publish Hl2_camera -> aruco_marker_hl2_frame -->
     <node pkg="aruco_ros" type="single" name="aruco_hl2">
