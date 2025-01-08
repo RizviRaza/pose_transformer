@@ -20,8 +20,8 @@ def calculate_error(transform_1, transform_2):
     euler1 = euler_from_quaternion(rot1)  # Roll, Pitch, Yaw
     euler2 = euler_from_quaternion(rot2)
 
-    print("Euler Angle for goal: ", euler1)
-    print("Euler Angle for drone: ", euler2)
+    # print("Euler Angle for goal: ", euler1)
+    # print("Euler Angle for drone: ", euler2)
 
     # Extract pitch (y-axis rotation) and calculate difference in degrees
     pitch1_deg = np.degrees(euler1[1])  # Pitch from transform_1
