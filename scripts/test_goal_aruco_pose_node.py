@@ -269,15 +269,47 @@ def publish_transforms(event):
         aruco_to_hl2_matrix = tf_trans.inverse_matrix(hl2_to_aruco_matrix)
         aruco_to_goal_matrix = aruco_to_hl2_matrix @ hl2_to_goal_matrix
         
-        aruco_to_goal_matrix_translation = tf_trans.translation_from_matrix(aruco_to_goal_matrix)
-        aruco_to_goal_matrix_rotation = tf_trans.quaternion_from_matrix(aruco_to_goal_matrix)
+        # aruco_to_goal_matrix_translation = tf_trans.translation_from_matrix(aruco_to_goal_matrix)
+        # aruco_to_goal_matrix_rotation = tf_trans.quaternion_from_matrix(aruco_to_goal_matrix)
 
+        # tf_broadcaster.sendTransform(
+        #     tuple(aruco_to_goal_matrix_translation),  # Translation as a tuple
+        #     tuple(aruco_to_goal_matrix_rotation),     # Rotation as a tuple
+        #     rospy.Time.now(),                    # Current time
+        #     "goal",                         # Child frame
+        #     "aruco"                              # Parent frame
+        # )
+
+        # Define the 90° rotations
+        # 90° anticlockwise rotation about x-axis
+        rotation_x_90_anticlockwise = tf_trans.rotation_matrix(-np.pi / 2, (1, 0, 0))
+
+        # 90° clockwise rotation about y-axis
+        rotation_y_90_clockwise = tf_trans.rotation_matrix(np.pi / 2, (0, 1, 0))
+
+        # Combine the rotations: first rotate around x, then around y
+        combined_rotation = rotation_x_90_anticlockwise @ rotation_y_90_clockwise
+
+        # Apply the combined rotation to the rotational part of the aruco_to_goal_matrix
+        adjusted_aruco_to_goal_matrix = np.copy(aruco_to_goal_matrix)
+        adjusted_aruco_to_goal_matrix[:3, :3] = aruco_to_goal_matrix[:3, :3] @ combined_rotation[:3, :3]
+
+
+        # Extract the adjusted translation and rotation
+        adjusted_translation = tf_trans.translation_from_matrix(adjusted_aruco_to_goal_matrix)
+        adjusted_rotation = tf_trans.quaternion_from_matrix(adjusted_aruco_to_goal_matrix)
+
+        adjusted_rotation = np.array(adjusted_rotation)
+        adjusted_rotation /= np.linalg.norm(adjusted_rotation)
+
+        # Broadcast the adjusted transform
+        # tf_broadcaster = tf2_ros.TransformBroadcaster()
         tf_broadcaster.sendTransform(
-            tuple(aruco_to_goal_matrix_translation),  # Translation as a tuple
-            tuple(aruco_to_goal_matrix_rotation),     # Rotation as a tuple
-            rospy.Time.now(),                    # Current time
-            "goal",                         # Child frame
-            "aruco"                              # Parent frame
+            tuple(adjusted_translation),  # Translation as a tuple
+            tuple(adjusted_rotation),    # Rotation as a tuple
+            rospy.Time.now(),            # Current time
+            "goal",                      # Child frame
+            "aruco"                      # Parent frame
         )
 
         aruco_to_hl2_matrix_translation = tf_trans.translation_from_matrix(aruco_to_hl2_matrix)

@@ -5,24 +5,30 @@ import tf
 from tf.transformations import euler_from_quaternion
 import numpy as np
 
+
 def calculate_error(transform_1, transform_2):
     # Calculate Euclidean distance
     pos1 = np.array(transform_1[0])
     pos2 = np.array(transform_2[0])
     euclidean_distance = np.linalg.norm(pos1 - pos2)
 
-    # Calculate rotational error
+    # Calculate rotational error around the y-axis (pitch)
     rot1 = transform_1[1]
     rot2 = transform_2[1]
 
     # Convert quaternions to Euler angles
-    euler1 = euler_from_quaternion(rot1)
+    euler1 = euler_from_quaternion(rot1)  # Roll, Pitch, Yaw
     euler2 = euler_from_quaternion(rot2)
 
-    # Calculate the angular difference
-    rotational_error = np.linalg.norm(np.array(euler1) - np.array(euler2))
+    print("Euler Angle for goal: ", euler1)
+    print("Euler Angle for drone: ", euler2)
 
-    return euclidean_distance, rotational_error
+    # Extract pitch (y-axis rotation) and calculate difference in degrees
+    pitch1_deg = np.degrees(euler1[1])  # Pitch from transform_1
+    pitch2_deg = np.degrees(euler2[1])  # Pitch from transform_2
+    pitch_error_deg = abs(pitch1_deg - pitch2_deg)
+
+    return euclidean_distance, pitch_error_deg
 
 def tf_callback():
     try:
@@ -44,7 +50,7 @@ if __name__ == "__main__":
     # Parameters
     parent_frame = rospy.get_param("~parent_frame", "aruco")
     child_frame_1 = rospy.get_param("~child_frame_1", "goal")
-    child_frame_2 = rospy.get_param("~child_frame_2", "base_link")
+    child_frame_2 = rospy.get_param("~child_frame_2", "drone")
 
     # TF listener
     listener = tf.TransformListener()
