@@ -357,7 +357,7 @@ if __name__ == '__main__':
     rospy.Subscriber('/aruco_hl2/pose', PoseStamped, aruco_hl2_pose_callback)
     
     rospy.Subscriber('/Player0/camera/pose', PoseStamped, hl2_pose_callback)
-    rospy.Subscriber('/tello/command_pos', PoseStamped, goal_pose_callback)
+    rospy.Subscriber('/tello/command_pos_world', PoseStamped, goal_pose_callback)
     rospy.Subscriber('/sentinel/mavros/local_position/pose', PoseStamped, drone_pose_callback)
 
 

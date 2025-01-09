@@ -16,6 +16,11 @@ def calculate_error(transform_1, transform_2):
     pos2 = np.array(transform_2[0])
     euclidean_distance = np.linalg.norm(pos1 - pos2)
 
+    # Calculate positional error components
+    x_error = abs(pos1[0] - pos2[0])
+    y_error = abs(pos1[1] - pos2[1])
+    z_error = abs(pos1[2] - pos2[2])
+
     # Calculate rotational error around the y-axis (pitch)
     rot1 = transform_1[1]
     rot2 = transform_2[1]
@@ -29,7 +34,7 @@ def calculate_error(transform_1, transform_2):
     pitch2_deg = np.degrees(euler2[1])  # Pitch from transform_2
     pitch_error_deg = abs(pitch1_deg - pitch2_deg)
 
-    return euclidean_distance, pitch_error_deg
+    return euclidean_distance, pitch_error_deg, x_error, y_error, z_error
 
 # Function to perform averaging and write to file
 def calculate_averaged_error(listener, parent_frame, child_frame_1, child_frame_2, averaging_duration, file_path):
@@ -43,8 +48,8 @@ def calculate_averaged_error(listener, parent_frame, child_frame_1, child_frame_
             transform_2 = listener.lookupTransform(parent_frame, child_frame_2, rospy.Time(0))
 
             # Calculate the error
-            distance, rotation = calculate_error(transform_1, transform_2)
-            errors.append((distance, rotation))
+            distance, rotation, x_err, y_err, z_err = calculate_error(transform_1, transform_2)
+            errors.append((distance, rotation, x_err, y_err, z_err))
 
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
             rospy.logwarn("TF Exception: {}".format(e))
@@ -55,13 +60,18 @@ def calculate_averaged_error(listener, parent_frame, child_frame_1, child_frame_
         # Calculate averages
         avg_distance = np.mean([e[0] for e in errors])
         avg_rotation = np.mean([e[1] for e in errors])
+        avg_x_error = np.mean([e[2] for e in errors])
+        avg_y_error = np.mean([e[3] for e in errors])
+        avg_z_error = np.mean([e[4] for e in errors])
 
         # Log results
         rospy.loginfo("Averaged Euclidean Distance: {:.4f}, Averaged Rotational Error: {:.4f}".format(avg_distance, avg_rotation))
+        rospy.loginfo("Averaged Positional Errors - X: {:.4f}, Y: {:.4f}, Z: {:.4f}".format(avg_x_error, avg_y_error, avg_z_error))
 
         # Write to file
         with open(file_path, 'a') as file:
             file.write("Averaged Euclidean Distance: {:.4f}, Averaged Rotational Error: {:.4f}\n".format(avg_distance, avg_rotation))
+            file.write("Averaged Positional Errors - X: {:.4f}, Y: {:.4f}, Z: {:.4f}\n".format(avg_x_error, avg_y_error, avg_z_error))
     else:
         rospy.logwarn("No valid data collected during the averaging period.")
 
