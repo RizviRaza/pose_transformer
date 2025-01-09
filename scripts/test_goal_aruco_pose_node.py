@@ -17,6 +17,7 @@ aruco_hl2_transform = None
 hl2_pose_transform = None
 goal_pose_transform = None
 drone_pose_transform = None
+map_to_world_pose_transform = None
 map_to_aruco_matrix = None
 
 tf_broadcaster = tf.TransformBroadcaster()
@@ -238,22 +239,65 @@ def goal_pose_callback(msg):
 
     print("map-goal transform recorded")
 
+def reloc_pose_callback(msg):
+    # global goal_pose_transform
+
+    global map_to_world_pose_transform, aruco_drone_transform, aruco_hl2_transform, hl2_pose_transform, goal_pose_transform, map_to_aruco_matrix
+
+    if msg.header.frame_id != 'Player0_unity':
+        return
+    
+    map_to_world_pose = msg.pose
+
+    map_to_world_pose_position = (map_to_world_pose.position.x, map_to_world_pose.position.y, map_to_world_pose.position.z)
+    map_to_world_pose_orientation = (map_to_world_pose.orientation.x, map_to_world_pose.orientation.y, map_to_world_pose.orientation.z, map_to_world_pose.orientation.w)
+
+    map_to_world_pose_transform = tf_trans.concatenate_matrices(
+        tf_trans.translation_matrix(map_to_world_pose_position),
+        tf_trans.quaternion_matrix(map_to_world_pose_orientation)
+    )
+
+    # Extract the translation and rotation from the transformation matrix
+    map_to_world_translation = tf_trans.translation_from_matrix(map_to_world_pose_transform)
+    map_to_world_rotation = tf_trans.quaternion_from_matrix(map_to_world_pose_transform)
+
+    map_to_world_pose_transform = {
+        "translation": map_to_world_translation.tolist(),
+        "rotation": map_to_world_rotation.tolist(),
+        "timestamp": msg.header.stamp.to_sec()
+    }
+
+    # tf_broadcaster.sendTransform(
+    #         tuple(goal_translation),  # Translation as a tuple
+    #         tuple(goal_rotation),     # Rotation as a tuple
+    #         msg.header.stamp,                    # Current time
+    #         "goal",                         # Child frame
+    #         "map"                              # Parent frame
+    #     )
+
+    print("map-world transform recorded")
+
 def publish_transforms(event):
     """
     Publishes the aruco -> goal and aruco -> base_link transforms 
     once all required transforms are available.
     """
-    global drone_pose_transform, aruco_drone_transform, aruco_hl2_transform, hl2_pose_transform, goal_pose_transform, map_to_aruco_matrix
+    global map_to_world_pose_transform, drone_pose_transform, aruco_drone_transform, aruco_hl2_transform, hl2_pose_transform, goal_pose_transform, map_to_aruco_matrix
 
-    if hl2_pose_transform and goal_pose_transform and aruco_hl2_transform:
+    if map_to_world_pose_transform and hl2_pose_transform and goal_pose_transform and aruco_hl2_transform:
         map_to_hl2_matrix = tf_trans.concatenate_matrices(
             tf_trans.translation_matrix(hl2_pose_transform['translation']),
             tf_trans.quaternion_matrix(hl2_pose_transform['rotation'])
         )
 
-        map_to_goal_matrix = tf_trans.concatenate_matrices(
+        world_to_goal = tf_trans.concatenate_matrices(
             tf_trans.translation_matrix(goal_pose_transform['translation']),
             tf_trans.quaternion_matrix(goal_pose_transform['rotation'])
+        )
+
+        map_to_world_matrix = tf_trans.concatenate_matrices(
+            tf_trans.translation_matrix(map_to_world_pose_transform['translation']),
+            tf_trans.quaternion_matrix(map_to_world_pose_transform['rotation'])
         )
 
         hl2_to_aruco_matrix = tf_trans.concatenate_matrices(
@@ -263,8 +307,9 @@ def publish_transforms(event):
 
         # Calculating hl2 -> goal
         hl2_to_map_matrix = tf_trans.inverse_matrix(map_to_hl2_matrix)
-        hl2_to_goal_matrix = hl2_to_map_matrix @ map_to_goal_matrix
-
+        # hl2_to_goal_matrix = hl2_to_map_matrix @ world_to_goal
+        hl2_to_goal_matrix = hl2_to_map_matrix @ map_to_world_matrix @ world_to_goal
+        
         # Calculating aruco -> goal
         aruco_to_hl2_matrix = tf_trans.inverse_matrix(hl2_to_aruco_matrix)
         aruco_to_goal_matrix = aruco_to_hl2_matrix @ hl2_to_goal_matrix
@@ -359,6 +404,8 @@ if __name__ == '__main__':
     rospy.Subscriber('/Player0/camera/pose', PoseStamped, hl2_pose_callback)
     rospy.Subscriber('/tello/command_pos_world', PoseStamped, goal_pose_callback)
     rospy.Subscriber('/sentinel/mavros/local_position/pose', PoseStamped, drone_pose_callback)
+
+    rospy.Subscriber('/reloc_map_pose', PoseStamped, reloc_pose_callback)
 
 
     tf_pub = rospy.Publisher('/tf', TFMessage, queue_size=10)
