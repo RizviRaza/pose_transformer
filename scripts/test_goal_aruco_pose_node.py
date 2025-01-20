@@ -340,7 +340,7 @@ def publish_transforms(event):
         adjusted_aruco_to_goal_matrix[:3, :3] = aruco_to_goal_matrix[:3, :3] @ combined_rotation[:3, :3]
 
 
-        # Extract the adjusted translation and rotation
+        # # Extract the adjusted translation and rotation
         adjusted_translation = tf_trans.translation_from_matrix(adjusted_aruco_to_goal_matrix)
         adjusted_rotation = tf_trans.quaternion_from_matrix(adjusted_aruco_to_goal_matrix)
 
@@ -356,6 +356,37 @@ def publish_transforms(event):
             "goal",                      # Child frame
             "aruco"                      # Parent frame
         )
+
+        ## Calculating aruco -> camera for the aruco -> goal transform
+
+        # Define T_goal_camera
+        # T_goal_camera_translation = [0.0636, 0, 0]
+        # T_goal_camera_rotation = [0, 0, 0, 1]
+
+        # # Convert translation and quaternion to transformation matrix
+        # T_goal_camera_matrix = np.eye(4)
+        # T_goal_camera_matrix[:3, 3] = T_goal_camera_translation
+        # T_goal_camera_matrix[:3, :3] = tf_trans.quaternion_matrix(T_goal_camera_rotation)[:3, :3]
+
+        # # Calculate T_aruco_camera
+        # T_aruco_camera_matrix = np.dot(adjusted_aruco_to_goal_matrix, T_goal_camera_matrix)
+
+        # # Extract translation and rotation
+        # aruco_camera_translation = tf_trans.translation_from_matrix(T_aruco_camera_matrix)
+        # aruco_camera_rotation = tf_trans.quaternion_from_matrix(T_aruco_camera_matrix)
+
+        # # Normalize quaternion
+        # aruco_camera_rotation = np.array(aruco_camera_rotation)
+        # aruco_camera_rotation /= np.linalg.norm(aruco_camera_rotation)
+
+        # tf_broadcaster.sendTransform(
+        #     tuple(aruco_camera_translation),  # Translation as a tuple
+        #     tuple(aruco_camera_rotation),    # Rotation as a tuple
+        #     rospy.Time.now(),            # Current time
+        #     "goal",                      # Child frame
+        #     "aruco"                      # Parent frame
+        # )
+
 
         aruco_to_hl2_matrix_translation = tf_trans.translation_from_matrix(aruco_to_hl2_matrix)
         aruco_to_hl2_matrix_rotation = tf_trans.quaternion_from_matrix(aruco_to_hl2_matrix)
