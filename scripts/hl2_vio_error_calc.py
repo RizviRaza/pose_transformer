@@ -3,18 +3,44 @@ import rospy
 from rosgraph_msgs.msg import Clock
 from geometry_msgs.msg import PoseStamped
 from message_filters import Subscriber, ApproximateTimeSynchronizer
+from math import sqrt
 
-# Global variables to store poses
-global_player_pose = None
-global_aruco_pose = None
+# Global variables to store the latest and previous poses
+global_player_pose_latest = None
+global_player_pose_prev = None
+global_aruco_pose_latest = None
+global_aruco_pose_prev = None
+
+def calculate_distance(pose1, pose2):
+    """
+    Calculate Euclidean distance between two PoseStamped positions.
+    """
+    if pose1 is None or pose2 is None:
+        return None
+
+    x1, y1, z1 = pose1.pose.position.x, pose1.pose.position.y, pose1.pose.position.z
+    x2, y2, z2 = pose2.pose.position.x, pose2.pose.position.y, pose2.pose.position.z
+
+    return sqrt((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)
 
 def pose_callback(player_pose, aruco_pose):
-    global global_player_pose, global_aruco_pose
-    global_player_pose = player_pose
-    global_aruco_pose = aruco_pose
-    rospy.loginfo("Synchronized poses received:")
-    rospy.loginfo("Player Pose: %s", player_pose)
-    rospy.loginfo("Aruco Pose: %s", aruco_pose)
+    global global_player_pose_latest, global_player_pose_prev
+    global global_aruco_pose_latest, global_aruco_pose_prev
+
+    # Update the previous poses
+    global_player_pose_prev = global_player_pose_latest
+    global_aruco_pose_prev = global_aruco_pose_latest
+
+    # Update the latest poses
+    global_player_pose_latest = player_pose
+    global_aruco_pose_latest = aruco_pose
+
+    # Calculate distances
+    player_distance = calculate_distance(global_player_pose_prev, global_player_pose_latest)
+    aruco_distance = calculate_distance(global_aruco_pose_prev, global_aruco_pose_latest)
+
+    rospy.loginfo("Player pose distance: %s", player_distance)
+    rospy.loginfo("Aruco pose distance: %s", aruco_distance)
 
 def main():
     rospy.init_node('pose_sync_node', anonymous=True)
