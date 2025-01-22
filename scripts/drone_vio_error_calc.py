@@ -27,6 +27,9 @@ def calculate_distance(pose1, pose2):
 
     return sqrt((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)
 
+def save_pose(pose, label):
+    rospy.loginfo(f"{label} saved: {pose}")
+    
 def handle_key_presses():
     global pose_1_drone, pose_1_aruco, pose_2_drone, pose_2_aruco
 
