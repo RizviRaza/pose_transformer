@@ -39,6 +39,12 @@ def pose_callback(player_pose, aruco_pose):
     player_distance = calculate_distance(global_player_pose_prev, global_player_pose_latest)
     aruco_distance = calculate_distance(global_aruco_pose_prev, global_aruco_pose_latest)
 
+    # if player_distance is not None and aruco_distance is not None:
+    #     global_player_pose_latest = None
+    #     global_player_pose_prev = None
+    #     global_aruco_pose_latest = None
+    #     global_aruco_pose_prev = None
+
     rospy.loginfo("Player pose distance: %s", player_distance)
     rospy.loginfo("Aruco pose distance: %s", aruco_distance)
 
