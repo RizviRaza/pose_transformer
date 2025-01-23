@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import rospy
 from rosgraph_msgs.msg import Clock
 from geometry_msgs.msg import PoseStamped
@@ -6,6 +7,7 @@ from message_filters import Subscriber, ApproximateTimeSynchronizer
 from math import sqrt
 import sys
 import select
+from datetime import datetime
 
 # Global variables to store the latest poses and saved poses
 global_drone_pose_latest = None
@@ -14,6 +16,25 @@ pose_1_drone = None
 pose_1_aruco = None
 pose_2_drone = None
 pose_2_aruco = None
+
+# Open log file
+log_file = None
+
+def initialize_log_file():
+    global log_file
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    file_name = f"drone_vio_error_{current_time}.txt"
+    log_file = open(file_name, 'w')
+    # log_file.write("New Measurement\n")
+
+
+def close_log_file():
+    if log_file:
+        log_file.close()
+
+def log_to_file(message):
+    if log_file:
+        log_file.write(message + "\n")
 
 def calculate_distance(pose1, pose2):
     """
@@ -55,8 +76,16 @@ def handle_key_presses():
                 drone_distance = calculate_distance(pose_1_drone, pose_2_drone)
                 aruco_distance = calculate_distance(pose_1_aruco, pose_2_aruco)
 
-                rospy.loginfo(f"Distance between Drone Pose 1 and Pose 2: {drone_distance}")
-                rospy.loginfo(f"Distance between Aruco Pose 1 and Pose 2: {aruco_distance}")
+                drone_log = f"Distance between Drone Pose 1 and Pose 2: {drone_distance}"
+                aruco_log = f"Distance between Aruco Pose 1 and Pose 2: {aruco_distance}"
+
+                rospy.loginfo(drone_log)
+                rospy.loginfo(aruco_log)
+
+                # Append logs to file
+                log_to_file("---New Measurement---")
+                log_to_file(drone_log)
+                log_to_file(aruco_log)
 
                 pose_1_drone = None
                 pose_1_aruco = None
@@ -74,8 +103,11 @@ def main():
     rospy.init_node('pose_sync_node', anonymous=True)
     rospy.loginfo("Initializing node...")
 
+    # Initialize log file
+    initialize_log_file()
+
     # Wait for /clock if using sim_time
-    if rospy.get_param('/use_sim_time', True):
+    if rospy.get_param('/use_sim_time', False):
         rospy.loginfo("Waiting for /clock topic...")
         try:
             rospy.wait_for_message("/clock", Clock, timeout=10.0)
@@ -107,15 +139,21 @@ def main():
     rospy.spin()
 
 if __name__ == '__main__':
+    original_settings = None
     try:
-        # Set stdin to non-blocking
+        # Save the original terminal settings
         import termios
+        original_settings = termios.tcgetattr(sys.stdin)
+
+        # Set stdin to non-blocking
         import tty
         tty.setcbreak(sys.stdin.fileno())
         main()
     except rospy.ROSInterruptException:
         rospy.loginfo("Shutting down pose sync node.")
     finally:
-        # Reset stdin to normal
-        import termios
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, termios.tcgetattr(sys.stdin))
+        # Restore the terminal settings
+        if original_settings:
+            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, original_settings)
+        # Close the log file
+        close_log_file()

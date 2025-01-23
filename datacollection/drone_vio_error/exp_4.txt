@@ -1,0 +1,21 @@
+---New Measurement---
+Distance between Drone Pose 1 and Pose 2: 0.9576873084093157
+Distance between Aruco Pose 1 and Pose 2: 1.0204268388477125
+---New Measurement---
+Distance between Drone Pose 1 and Pose 2: 0.8654962423938366
+Distance between Aruco Pose 1 and Pose 2: 0.8866881644883179
+---New Measurement---
+Distance between Drone Pose 1 and Pose 2: 0.9399905737360799
+Distance between Aruco Pose 1 and Pose 2: 1.063517526749686
+---New Measurement---
+Distance between Drone Pose 1 and Pose 2: 0.7366838995662506
+Distance between Aruco Pose 1 and Pose 2: 0.7523731363144914
+---New Measurement---
+Distance between Drone Pose 1 and Pose 2: 1.0082362566147105
+Distance between Aruco Pose 1 and Pose 2: 1.0545365488814862
+---New Measurement---
+Distance between Drone Pose 1 and Pose 2: 0.7526058027633238
+Distance between Aruco Pose 1 and Pose 2: 0.7736119961785436
+---New Measurement---
+Distance between Drone Pose 1 and Pose 2: 1.0990971144690216
+Distance between Aruco Pose 1 and Pose 2: 1.2601647894657357
