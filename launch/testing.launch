@@ -31,7 +31,7 @@
     <node pkg="aruco_ros" type="single" name="aruco_hl2">
         <remap from="/camera_info" to="/Player0/camera/camera_info/updated" />
         <remap from="/image" to="/Player0/camera/uncompressed" />
-        <param name="image_is_rectified" value="True"/>
+        <param name="image_is_rectified" value="False"/>
         <param name="marker_size"        value="$(arg markerSize)"/>
         <param name="marker_id"          value="$(arg markerId)"/>
         <param name="reference_frame"    value=""/>

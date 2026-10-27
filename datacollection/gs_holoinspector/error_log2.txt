@@ -1,0 +1,226 @@
+Error Log
+===========
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.1486076789661981, -0.03215030104698475, 1.6138194664071024]
+  Orientation (Quaternion): [0.9999049007998834, -0.009227411594730285, 0.009470795398867983, -0.0039176863261012355]
+Averaged aruco -> drone transform:
+  Position: [-0.09374246741934067, 0.07148310044545327, 1.3686214091873268]
+  Orientation (Quaternion): [0.9921459824988125, 0.0010389999669607962, 0.01134132197904497, 0.055225523135720794]
+Errors:
+  Positional Errors - X: 0.2424, Y: 0.1036, Z: 0.2452
+  Euclidean Distance Error: 0.3600
+  Rotational Error (Degrees): 0.2181
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.02964508405767563, -0.11544374646538427, 1.294933361639488]
+  Orientation (Quaternion): [0.9995704266704021, -0.008392333612422228, -0.027674180354380868, -0.004761365791604935]
+Averaged aruco -> drone transform:
+  Position: [-0.12844376253867676, -0.17692023887285835, 1.0581503825545728]
+  Orientation (Quaternion): [0.9979423506484697, -0.0010921979495084435, -0.06381935142074686, 0.0010016846263487481]
+Errors:
+  Positional Errors - X: 0.1581, Y: 0.0615, Z: 0.2368
+  Euclidean Distance Error: 0.2913
+  Rotational Error (Degrees): 4.1421
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [-0.0014656170372391863, -0.11192419113219046, 1.331690718898106]
+  Orientation (Quaternion): [0.9994227920299404, -0.008819245867792954, -0.032415701394853454, -0.00505232386943552]
+Averaged aruco -> drone transform:
+  Position: [-0.14296679955344485, -0.17085517282129395, 1.0620914969350264]
+  Orientation (Quaternion): [0.9981728316347165, -0.0006013641570432776, -0.05931288133591888, 0.0030703370107617338]
+Errors:
+  Positional Errors - X: 0.1415, Y: 0.0589, Z: 0.2696
+  Euclidean Distance Error: 0.3101
+  Rotational Error (Degrees): 3.0808
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.14110836791983017, -0.01387791625266939, 1.4303606742897248]
+  Orientation (Quaternion): [0.9997761523964385, -0.007900831676765094, -0.019554200910362605, -0.0016897292523354187]
+Averaged aruco -> drone transform:
+  Position: [-0.0078081755078173685, -0.0867660396743878, 1.2098356057238444]
+  Orientation (Quaternion): [0.9989066966275473, -0.0017266216193694978, -0.04508235552960452, -0.00723329218938898]
+Errors:
+  Positional Errors - X: 0.1489, Y: 0.0729, Z: 0.2205
+  Euclidean Distance Error: 0.2759
+  Rotational Error (Degrees): 2.9270
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.002694637867887484, -0.01314471585512307, 1.4378988395221348]
+  Orientation (Quaternion): [0.9998654377477586, -0.008465137420439995, -0.013920283933544624, -0.0019166484147634486]
+Averaged aruco -> drone transform:
+  Position: [-0.02748874487551242, -0.086316270482748, 1.2133760568458558]
+  Orientation (Quaternion): [0.9992759444224538, -0.004013632886031923, -0.034865098790201415, -0.0053905294496759525]
+Errors:
+  Positional Errors - X: 0.0302, Y: 0.0732, Z: 0.2245
+  Euclidean Distance Error: 0.2381
+  Rotational Error (Degrees): 2.4018
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.012626800350035605, -0.014413659200455023, 1.4106841298709025]
+  Orientation (Quaternion): [0.9997903387376276, -0.008348715404710803, -0.01855257558055666, -0.0023193657147579107]
+Averaged aruco -> drone transform:
+  Position: [-0.031062609021718465, -0.07570563011036398, 1.218959235842438]
+  Orientation (Quaternion): [0.9993156347095183, -0.003036692954732415, -0.03260018590476531, -0.0012267228939677576]
+Errors:
+  Positional Errors - X: 0.0437, Y: 0.0613, Z: 0.1917
+  Euclidean Distance Error: 0.2060
+  Rotational Error (Degrees): 1.6091
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [-0.046290374998561146, -0.028902698476593623, 1.4113264446141756]
+  Orientation (Quaternion): [0.9987333233896338, -0.00909177152665466, 0.04937583540623382, -0.0033339645380199875]
+Averaged aruco -> drone transform:
+  Position: [-0.23859784188724809, -0.0993610100794981, 1.1909906018926548]
+  Orientation (Quaternion): [0.9994067546893983, -0.004483161760643412, 0.03384790307374844, 0.0009020769565080397]
+Errors:
+  Positional Errors - X: 0.1923, Y: 0.0705, Z: 0.2203
+  Euclidean Distance Error: 0.3008
+  Rotational Error (Degrees): 1.7767
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [-0.054337811458810004, -0.0419357913196567, 1.3951097973370812]
+  Orientation (Quaternion): [0.9987516107845028, -0.007960971535885408, 0.049186123694374875, -0.003545154931410623]
+Averaged aruco -> drone transform:
+  Position: [-0.22548176599117045, -0.09147336587921368, 1.1928059267265023]
+  Orientation (Quaternion): [0.9996077913069794, -0.0040713562973133275, 0.026803936713663334, 0.0012007795173790167]
+Errors:
+  Positional Errors - X: 0.1711, Y: 0.0495, Z: 0.2023
+  Euclidean Distance Error: 0.2696
+  Rotational Error (Degrees): 2.5626
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.1250977994313135, -0.04368200321848235, 1.7479123890757184]
+  Orientation (Quaternion): [0.9997525591331332, -0.00880873537862488, -0.02008628742207618, -0.0037104912583580006]
+Averaged aruco -> drone transform:
+  Position: [-0.021077007691581454, -0.1239836779152774, 1.5874228425522316]
+  Orientation (Quaternion): [0.9986917296100215, -0.0028207726275653678, -0.04573346244382815, -0.005266662627231714]
+Errors:
+  Positional Errors - X: 0.1462, Y: 0.0803, Z: 0.1605
+  Euclidean Distance Error: 0.2315
+  Rotational Error (Degrees): 2.9399
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [-0.04663330012971456, -0.043786401757681524, 1.7503569780159867]
+  Orientation (Quaternion): [0.9998868074060745, -0.007741853923973418, -0.012110140144887045, -0.004447536259408412]
+Averaged aruco -> drone transform:
+  Position: [-0.025700647723645678, -0.14887558308980892, 1.593511075223019]
+  Orientation (Quaternion): [0.9987562183376164, -0.0014017691700152005, -0.047326591452699206, -0.011788232356823964]
+Errors:
+  Positional Errors - X: 0.0209, Y: 0.1051, Z: 0.1568
+  Euclidean Distance Error: 0.1900
+  Rotational Error (Degrees): 4.0354
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [-0.13395857254629173, -0.04427628645245986, 1.1023211629059972]
+  Orientation (Quaternion): [0.998499792582822, -0.008684949740032779, 0.05390182293249125, -0.00416285294347935]
+Averaged aruco -> drone transform:
+  Position: [-0.3264484350568321, -0.12230095960120835, 0.811879582614577]
+  Orientation (Quaternion): [0.9994884104165078, -0.002972850091241841, 0.031279710765425565, 0.002937672849015366]
+Errors:
+  Positional Errors - X: 0.1925, Y: 0.0780, Z: 0.2904
+  Euclidean Distance Error: 0.3571
+  Rotational Error (Degrees): 2.5892
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [-0.13208985743365032, -0.056625441979226365, 1.0877856643834602]
+  Orientation (Quaternion): [0.9985994181664626, -0.007781356368586697, 0.05226993342093588, -0.002550801999133257]
+Averaged aruco -> drone transform:
+  Position: [-0.3221579993867792, -0.12382051590098478, 0.8011240330588536]
+  Orientation (Quaternion): [0.9995189353846401, -0.0018218714971222516, 0.030299239062403446, 0.0025748656540506647]
+Errors:
+  Positional Errors - X: 0.1901, Y: 0.0672, Z: 0.2867
+  Euclidean Distance Error: 0.3505
+  Rotational Error (Degrees): 2.5168
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.2792942217563411, -0.04989556905789845, 1.1358520927521956]
+  Orientation (Quaternion): [0.9812468908456129, -0.007746197948551335, -0.1925991958273565, -0.0002922153577192044]
+Averaged aruco -> drone transform:
+  Position: [0.24132280616252846, -0.11991660327497869, 0.8066906006003742]
+  Orientation (Quaternion): [0.9764885770286615, -0.0011551003131074259, -0.21503714788646452, -0.008006243321535817]
+Errors:
+  Positional Errors - X: 0.0380, Y: 0.0700, Z: 0.3292
+  Euclidean Distance Error: 0.3387
+  Rotational Error (Degrees): 2.6292
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.2884336051777808, -0.05992761724016229, 1.1129362617864587]
+  Orientation (Quaternion): [0.9807853940256824, -0.008048281466725593, -0.19491276148083356, -0.0020619028189906067]
+Averaged aruco -> drone transform:
+  Position: [0.23868105296645933, -0.12030638023992893, 0.8183736804176048]
+  Orientation (Quaternion): [0.9770631766861225, -0.0008818753215338281, -0.21262719166887592, -0.01063873191636663]
+Errors:
+  Positional Errors - X: 0.0498, Y: 0.0604, Z: 0.2946
+  Euclidean Distance Error: 0.3048
+  Rotational Error (Degrees): 2.0722
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [-0.1311495799937319, -0.04927777885896177, 1.757904154561016]
+  Orientation (Quaternion): [0.9985456245269327, -0.008112785612045155, -0.05323907426652221, -0.0025336572330421038]
+Averaged aruco -> drone transform:
+  Position: [-0.09027137330888117, -0.19090989618124918, 1.4862184041814208]
+  Orientation (Quaternion): [0.9947822073669017, -0.0018871323909602047, -0.10097431409748697, -0.012740637889677418]
+Errors:
+  Positional Errors - X: 0.0409, Y: 0.1416, Z: 0.2717
+  Euclidean Distance Error: 0.3091
+  Rotational Error (Degrees): 5.4869
+
+
+New Measurement
+================
+aruco -> goal transform:
+  Position: [0.039162942114307486, -0.058773712512289356, 1.722413384139507]
+  Orientation (Quaternion): [0.9980054056516126, -0.008947276342481832, -0.06229671327613586, -0.004927073289738541]
+Averaged aruco -> drone transform:
+  Position: [-0.06555541457443942, -0.19544575671641284, 1.4841488425803016]
+  Orientation (Quaternion): [0.9937903743142728, -3.3179740947699e-05, -0.10995508188197987, -0.014848896560198324]
+Errors:
+  Positional Errors - X: 0.1047, Y: 0.1367, Z: 0.2383
+  Euclidean Distance Error: 0.2940
+  Rotational Error (Degrees): 5.4765

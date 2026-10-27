@@ -27,6 +27,7 @@ tf_broadcaster = tf.TransformBroadcaster()
 def camera_info_callback(camera_info_msg):
     camera_info_msg.D = [0.0355633167278393, -0.123584193169489, -0.000250953321849423, -0.000181034148553509, 0.155155222181198]
     camera_info_msg.P = [2992.533447265625, 0.0, 1917.8743896484375, 0.0, 0.0, 2994.665771484375, 1038.7142333984375, 0.0, 0.0, 0.0, 1.0, 0.0]
+    camera_info_msg.distortion_model = "plumb_bob"
     hl2_camera_info_pub.publish(camera_info_msg)
     print("hl2 camera info published")
 
@@ -181,29 +182,45 @@ def drone_pose_callback(msg):
     #         "map"                              # Parent frame
     #     )
 
-    print("map-drone transform recorded")
+    # print("map-drone transform recorded")
 
 # Subscribes to the /tello/command_pos topic
 # Saves the map -> goal transform
 def goal_pose_callback(msg):
-    # global goal_pose_transform
+    global goal_pose_transform
 
-    global aruco_drone_transform, aruco_hl2_transform, hl2_pose_transform, goal_pose_transform, map_to_aruco_matrix
+    # base_link pose in WORLD (from the message)
+    p_bl_w = np.array([msg.pose.position.x,
+                       msg.pose.position.y,
+                       msg.pose.position.z], dtype=float)
 
+    q_bl_w = np.array([msg.pose.orientation.x,
+                       msg.pose.orientation.y,
+                       msg.pose.orientation.z,
+                       msg.pose.orientation.w], dtype=float)
+    # normalize for safety
+    q_bl_w /= np.linalg.norm(q_bl_w)
 
-    goal_pose = msg.pose
+    # camera extrinsics relative to base_link:
+    # 0.0636 m along base_link +X (forward per REP 103)
+    t_cam_bl = np.array([0.0636, 0.0, 0.0], dtype=float)
 
-     ## converting ROS to CV
+    # if the camera has a fixed rotation wrt base_link, put it here (identity if not)
+    q_bl_cam = tf_trans.quaternion_from_euler(0.0, 0.0, 0.0)
 
-    # goal_pose = ros_to_cv_pose_stamped(msg).pose
+    # rotate the offset into WORLD
+    R_bl_w = tf_trans.quaternion_matrix(q_bl_w)[:3, :3]
+    t_cam_w = R_bl_w.dot(t_cam_bl)
 
-    goal_position = (goal_pose.position.x, goal_pose.position.y, goal_pose.position.z)
-    # goal_position = (goal_pose.position.z, goal_pose.position.y, -goal_pose.position.x)
-    goal_orientation = (goal_pose.orientation.x, goal_pose.orientation.y, goal_pose.orientation.z, goal_pose.orientation.w)
+    # compose camera pose in WORLD
+    p_cam_w = p_bl_w + t_cam_w
+    q_cam_w = tf_trans.quaternion_multiply(q_bl_w, q_bl_cam)
+    q_cam_w = np.array(q_cam_w); q_cam_w /= np.linalg.norm(q_cam_w)
 
+    # store as your 4x4 transform (same shape your code expects)
     goal_pose_transform = tf_trans.concatenate_matrices(
-        tf_trans.translation_matrix(goal_position),
-        tf_trans.quaternion_matrix(goal_orientation)
+        tf_trans.translation_matrix(p_cam_w.tolist()),
+        tf_trans.quaternion_matrix(q_cam_w.tolist())
     )
 
     # Extract the translation and rotation from the transformation matrix

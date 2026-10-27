@@ -1,0 +1,737 @@
+---New Measurement---
+Player previous pose: header: 
+  seq: 1
+  stamp: 
+    secs: 1737666907
+    nsecs: 656735897
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.44137251377105713
+    y: -0.49278563261032104
+    z: -0.017310068011283875
+  orientation: 
+    x: -0.6899244785308838
+    y: 0.33761486411094666
+    z: -0.3251075744628906
+    w: 0.5516569018363953
+Player latest pose: header: 
+  seq: 2
+  stamp: 
+    secs: 1737666914
+    nsecs: 636037588
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.7479435801506042
+    y: -0.3032531440258026
+    z: -0.04505401477217674
+  orientation: 
+    x: -0.702795147895813
+    y: 0.37051424384117126
+    z: -0.290341317653656
+    w: 0.5333853363990784
+Aruco previous pose: header: 
+  seq: 4
+  stamp: 
+    secs: 1737666907
+    nsecs:   4735231
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.07782141864299774
+    y: -0.06961901485919952
+    z: 1.2358992099761963
+  orientation: 
+    x: 0.9822221685244005
+    y: 0.05308153382401905
+    z: -0.16206103962374774
+    w: -0.07847408401621363
+Aruco latest pose: header: 
+  seq: 5
+  stamp: 
+    secs: 1737666914
+    nsecs:  11039495
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.06385186314582825
+    y: -0.1069415956735611
+    z: 0.8517528176307678
+  orientation: 
+    x: 0.9785298239959803
+    y: 0.02843065388480622
+    z: -0.16136769611322155
+    w: -0.1250261897411468
+Player pose distance: 0.36149427319392563
+Aruco pose distance: 0.3862079417508668
+---New Measurement---
+Player previous pose: header: 
+  seq: 2
+  stamp: 
+    secs: 1737666914
+    nsecs: 636037588
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.7479435801506042
+    y: -0.3032531440258026
+    z: -0.04505401477217674
+  orientation: 
+    x: -0.702795147895813
+    y: 0.37051424384117126
+    z: -0.290341317653656
+    w: 0.5333853363990784
+Player latest pose: header: 
+  seq: 3
+  stamp: 
+    secs: 1737666942
+    nsecs: 753482818
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.5358155369758606
+    y: 0.1360759735107422
+    z: -0.05888785049319267
+  orientation: 
+    x: -0.5656492114067078
+    y: 0.5212692022323608
+    z: -0.47504353523254395
+    w: 0.42737919092178345
+Aruco previous pose: header: 
+  seq: 5
+  stamp: 
+    secs: 1737666914
+    nsecs:  11039495
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.06385186314582825
+    y: -0.1069415956735611
+    z: 0.8517528176307678
+  orientation: 
+    x: 0.9785298239959803
+    y: 0.02843065388480622
+    z: -0.16136769611322155
+    w: -0.1250261897411468
+Aruco latest pose: header: 
+  seq: 6
+  stamp: 
+    secs: 1737666942
+    nsecs:  50525903
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.03695997595787048
+    y: -0.0707089826464653
+    z: 0.9799684286117554
+  orientation: 
+    x: 0.9865663628072794
+    y: 0.03471277697580729
+    z: 0.12290026312440311
+    w: -0.10186932912214555
+Player pose distance: 0.48805712291425596
+Aruco pose distance: 0.13592357684570053
+---New Measurement---
+Player previous pose: header: 
+  seq: 3
+  stamp: 
+    secs: 1737666942
+    nsecs: 753482818
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.5358155369758606
+    y: 0.1360759735107422
+    z: -0.05888785049319267
+  orientation: 
+    x: -0.5656492114067078
+    y: 0.5212692022323608
+    z: -0.47504353523254395
+    w: 0.42737919092178345
+Player latest pose: header: 
+  seq: 4
+  stamp: 
+    secs: 1737666948
+    nsecs: 377498388
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.5348483920097351
+    y: 0.21575598418712616
+    z: -0.18795013427734375
+  orientation: 
+    x: -0.48062995076179504
+    y: 0.4752720594406128
+    z: -0.5663788318634033
+    w: 0.47151485085487366
+Aruco previous pose: header: 
+  seq: 6
+  stamp: 
+    secs: 1737666942
+    nsecs:  50525903
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.03695997595787048
+    y: -0.0707089826464653
+    z: 0.9799684286117554
+  orientation: 
+    x: 0.9865663628072794
+    y: 0.03471277697580729
+    z: 0.12290026312440311
+    w: -0.10186932912214555
+Aruco latest pose: header: 
+  seq: 7
+  stamp: 
+    secs: 1737666947
+    nsecs: 746999025
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.03680998459458351
+    y: 0.05587843433022499
+    z: 0.9673728346824646
+  orientation: 
+    x: 0.9803902739043191
+    y: 0.056743328363812476
+    z: 0.1857832318354864
+    w: 0.033161668968445135
+Player pose distance: 0.15168029722529855
+Aruco pose distance: 0.12721260008612004
+---New Measurement---
+Player previous pose: header: 
+  seq: 4
+  stamp: 
+    secs: 1737666948
+    nsecs: 377498388
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.5348483920097351
+    y: 0.21575598418712616
+    z: -0.18795013427734375
+  orientation: 
+    x: -0.48062995076179504
+    y: 0.4752720594406128
+    z: -0.5663788318634033
+    w: 0.47151485085487366
+Player latest pose: header: 
+  seq: 5
+  stamp: 
+    secs: 1737666954
+    nsecs: 717599153
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.627823531627655
+    y: -0.5007138252258301
+    z: -0.09682842344045639
+  orientation: 
+    x: -0.6690027117729187
+    y: 0.30826646089553833
+    z: -0.31399470567703247
+    w: 0.5990111231803894
+Aruco previous pose: header: 
+  seq: 7
+  stamp: 
+    secs: 1737666947
+    nsecs: 746999025
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.03680998459458351
+    y: 0.05587843433022499
+    z: 0.9673728346824646
+  orientation: 
+    x: 0.9803902739043191
+    y: 0.056743328363812476
+    z: 0.1857832318354864
+    w: 0.033161668968445135
+Aruco latest pose: header: 
+  seq: 8
+  stamp: 
+    secs: 1737666954
+    nsecs:  17098426
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.037786468863487244
+    y: -0.02497158944606781
+    z: 1.0706573724746704
+  orientation: 
+    x: 0.9791019636890826
+    y: 0.034226062073833656
+    z: -0.19734832418660347
+    w: -0.03523578175434124
+Player pose distance: 0.7282008861386059
+Aruco pose distance: 0.1311692632178138
+---New Measurement---
+Player previous pose: header: 
+  seq: 5
+  stamp: 
+    secs: 1737666954
+    nsecs: 717599153
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.627823531627655
+    y: -0.5007138252258301
+    z: -0.09682842344045639
+  orientation: 
+    x: -0.6690027117729187
+    y: 0.30826646089553833
+    z: -0.31399470567703247
+    w: 0.5990111231803894
+Player latest pose: header: 
+  seq: 6
+  stamp: 
+    secs: 1737666964
+    nsecs: 543093442
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.4016187787055969
+    y: 0.5283675193786621
+    z: 0.0091868806630373
+  orientation: 
+    x: -0.4317716956138611
+    y: 0.6209244728088379
+    z: -0.5766903162002563
+    w: 0.30895671248435974
+Aruco previous pose: header: 
+  seq: 8
+  stamp: 
+    secs: 1737666954
+    nsecs:  17098426
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.037786468863487244
+    y: -0.02497158944606781
+    z: 1.0706573724746704
+  orientation: 
+    x: 0.9791019636890826
+    y: 0.034226062073833656
+    z: -0.19734832418660347
+    w: -0.03523578175434124
+Aruco latest pose: header: 
+  seq: 9
+  stamp: 
+    secs: 1737666963
+    nsecs: 901095151
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: -0.09651490300893784
+    y: -0.009573768824338913
+    z: 1.201513409614563
+  orientation: 
+    x: 0.9276904357364063
+    y: 0.028571170056120036
+    z: 0.3619795603669448
+    w: -0.08686162306435674
+Player pose distance: 1.058969427680363
+Aruco pose distance: 0.1881415791968147
+---New Measurement---
+Player previous pose: header: 
+  seq: 6
+  stamp: 
+    secs: 1737666964
+    nsecs: 543093442
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.4016187787055969
+    y: 0.5283675193786621
+    z: 0.0091868806630373
+  orientation: 
+    x: -0.4317716956138611
+    y: 0.6209244728088379
+    z: -0.5766903162002563
+    w: 0.30895671248435974
+Player latest pose: header: 
+  seq: 7
+  stamp: 
+    secs: 1737666969
+    nsecs: 840540647
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.3963153064250946
+    y: -0.13969314098358154
+    z: -0.0012609735131263733
+  orientation: 
+    x: -0.6195083856582642
+    y: 0.46011731028556824
+    z: -0.42892026901245117
+    w: 0.4696047902107239
+Aruco previous pose: header: 
+  seq: 9
+  stamp: 
+    secs: 1737666963
+    nsecs: 901095151
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: -0.09651490300893784
+    y: -0.009573768824338913
+    z: 1.201513409614563
+  orientation: 
+    x: 0.9276904357364063
+    y: 0.028571170056120036
+    z: 0.3619795603669448
+    w: -0.08686162306435674
+Aruco latest pose: header: 
+  seq: 10
+  stamp: 
+    secs: 1737666969
+    nsecs: 213042020
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: -0.022169634699821472
+    y: -0.05795285850763321
+    z: 1.1509381532669067
+  orientation: 
+    x: 0.9941484758466149
+    y: 0.04717496320305707
+    z: 0.039106997959610854
+    w: -0.08896051668706631
+Player pose distance: 0.6681634009722124
+Aruco pose distance: 0.1021058852033999
+---New Measurement---
+Player previous pose: header: 
+  seq: 7
+  stamp: 
+    secs: 1737666969
+    nsecs: 840540647
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.3963153064250946
+    y: -0.13969314098358154
+    z: -0.0012609735131263733
+  orientation: 
+    x: -0.6195083856582642
+    y: 0.46011731028556824
+    z: -0.42892026901245117
+    w: 0.4696047902107239
+Player latest pose: header: 
+  seq: 8
+  stamp: 
+    secs: 1737666975
+    nsecs: 910142421
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.7611532211303711
+    y: -0.44778940081596375
+    z: -0.00443485751748085
+  orientation: 
+    x: -0.6919151544570923
+    y: 0.2773008644580841
+    z: -0.300888329744339
+    w: 0.5948307514190674
+Aruco previous pose: header: 
+  seq: 10
+  stamp: 
+    secs: 1737666969
+    nsecs: 213042020
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: -0.022169634699821472
+    y: -0.05795285850763321
+    z: 1.1509381532669067
+  orientation: 
+    x: 0.9941484758466149
+    y: 0.04717496320305707
+    z: 0.039106997959610854
+    w: -0.08896051668706631
+Aruco latest pose: header: 
+  seq: 11
+  stamp: 
+    secs: 1737666975
+    nsecs: 278641462
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.049514010548591614
+    y: 0.060570504516363144
+    z: 0.9332874417304993
+  orientation: 
+    x: 0.9709461469692865
+    y: 0.055759517725632195
+    z: -0.2287302778664296
+    w: -0.04285925635901337
+Player pose distance: 0.47753542577370156
+Aruco pose distance: 0.25798869124619167
+---New Measurement---
+Player previous pose: header: 
+  seq: 8
+  stamp: 
+    secs: 1737666975
+    nsecs: 910142421
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.7611532211303711
+    y: -0.44778940081596375
+    z: -0.00443485751748085
+  orientation: 
+    x: -0.6919151544570923
+    y: 0.2773008644580841
+    z: -0.300888329744339
+    w: 0.5948307514190674
+Player latest pose: header: 
+  seq: 9
+  stamp: 
+    secs: 1737666998
+    nsecs: 854164361
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.5053561329841614
+    y: -0.5345008969306946
+    z: -0.031933270394802094
+  orientation: 
+    x: -0.6828116178512573
+    y: 0.3397175073623657
+    z: -0.3259497284889221
+    w: 0.5586742758750916
+Aruco previous pose: header: 
+  seq: 11
+  stamp: 
+    secs: 1737666975
+    nsecs: 278641462
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.049514010548591614
+    y: 0.060570504516363144
+    z: 0.9332874417304993
+  orientation: 
+    x: 0.9709461469692865
+    y: 0.055759517725632195
+    z: -0.2287302778664296
+    w: -0.04285925635901337
+Aruco latest pose: header: 
+  seq: 12
+  stamp: 
+    secs: 1737666998
+    nsecs: 219664335
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.001974039012566209
+    y: -0.06452405452728271
+    z: 1.205167531967163
+  orientation: 
+    x: 0.9832568671021195
+    y: 0.04651268982406455
+    z: -0.16071120018993684
+    w: -0.07221089332895313
+Player pose distance: 0.2714906933456585
+Aruco pose distance: 0.3030304952691507
+---New Measurement---
+Player previous pose: header: 
+  seq: 9
+  stamp: 
+    secs: 1737666998
+    nsecs: 854164361
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.5053561329841614
+    y: -0.5345008969306946
+    z: -0.031933270394802094
+  orientation: 
+    x: -0.6828116178512573
+    y: 0.3397175073623657
+    z: -0.3259497284889221
+    w: 0.5586742758750916
+Player latest pose: header: 
+  seq: 10
+  stamp: 
+    secs: 1737667003
+    nsecs: 640533447
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.7021898031234741
+    y: -0.7408443093299866
+    z: -0.04051869362592697
+  orientation: 
+    x: -0.7307901382446289
+    y: 0.2554958462715149
+    z: -0.23369570076465607
+    w: 0.5882633328437805
+Aruco previous pose: header: 
+  seq: 12
+  stamp: 
+    secs: 1737666998
+    nsecs: 219664335
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.001974039012566209
+    y: -0.06452405452728271
+    z: 1.205167531967163
+  orientation: 
+    x: 0.9832568671021195
+    y: 0.04651268982406455
+    z: -0.16071120018993684
+    w: -0.07221089332895313
+Aruco latest pose: header: 
+  seq: 13
+  stamp: 
+    secs: 1737667002
+    nsecs: 991035699
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.030590297654271126
+    y: -0.11076837033033371
+    z: 1.1824955940246582
+  orientation: 
+    x: 0.9514409827439416
+    y: 0.04942010143862828
+    z: -0.29116312856812254
+    w: -0.08684320636331398
+Player pose distance: 0.28529775153890297
+Aruco pose distance: 0.058918959366319905
+---New Measurement---
+Player previous pose: header: 
+  seq: 10
+  stamp: 
+    secs: 1737667003
+    nsecs: 640533447
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.7021898031234741
+    y: -0.7408443093299866
+    z: -0.04051869362592697
+  orientation: 
+    x: -0.7307901382446289
+    y: 0.2554958462715149
+    z: -0.23369570076465607
+    w: 0.5882633328437805
+Player latest pose: header: 
+  seq: 11
+  stamp: 
+    secs: 1737667009
+    nsecs:  71465730
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.6087672114372253
+    y: -0.5286298990249634
+    z: -0.03769603744149208
+  orientation: 
+    x: -0.7141080498695374
+    y: 0.3161791265010834
+    z: -0.30927008390426636
+    w: 0.5426163077354431
+Aruco previous pose: header: 
+  seq: 13
+  stamp: 
+    secs: 1737667002
+    nsecs: 991035699
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.030590297654271126
+    y: -0.11076837033033371
+    z: 1.1824955940246582
+  orientation: 
+    x: 0.9514409827439416
+    y: 0.04942010143862828
+    z: -0.29116312856812254
+    w: -0.08684320636331398
+Aruco latest pose: header: 
+  seq: 14
+  stamp: 
+    secs: 1737667008
+    nsecs: 429965496
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.017036421224474907
+    y: -0.11701259016990662
+    z: 1.101468801498413
+  orientation: 
+    x: 0.9744352997472293
+    y: 0.07060094930197303
+    z: -0.19018356877448125
+    w: -0.09654824044170737
+Player pose distance: 0.2318851094107162
+Aruco pose distance: 0.0823895561025199
+---New Measurement---
+Player previous pose: header: 
+  seq: 11
+  stamp: 
+    secs: 1737667009
+    nsecs:  71465730
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.6087672114372253
+    y: -0.5286298990249634
+    z: -0.03769603744149208
+  orientation: 
+    x: -0.7141080498695374
+    y: 0.3161791265010834
+    z: -0.30927008390426636
+    w: 0.5426163077354431
+Player latest pose: header: 
+  seq: 12
+  stamp: 
+    secs: 1737667015
+    nsecs: 406377553
+  frame_id: "Player0_unity"
+pose: 
+  position: 
+    x: 0.44125765562057495
+    y: 0.357377290725708
+    z: -0.02157554216682911
+  orientation: 
+    x: -0.49504852294921875
+    y: 0.5944515466690063
+    z: -0.5185298323631287
+    w: 0.36425405740737915
+Aruco previous pose: header: 
+  seq: 14
+  stamp: 
+    secs: 1737667008
+    nsecs: 429965496
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: 0.017036421224474907
+    y: -0.11701259016990662
+    z: 1.101468801498413
+  orientation: 
+    x: 0.9744352997472293
+    y: 0.07060094930197303
+    z: -0.19018356877448125
+    w: -0.09654824044170737
+Aruco latest pose: header: 
+  seq: 15
+  stamp: 
+    secs: 1737667014
+    nsecs: 787376880
+  frame_id: "hl2_camera"
+pose: 
+  position: 
+    x: -0.005761254113167524
+    y: -0.07568473368883133
+    z: 1.1034084558486938
+  orientation: 
+    x: 0.9589391807882213
+    y: 0.01394346009391116
+    z: 0.26359221642527736
+    w: -0.10373220767839847
+Player pose distance: 0.9018470280195384
+Aruco pose distance: 0.04723862806135959

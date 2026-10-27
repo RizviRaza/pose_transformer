@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 import rospy
+import sys
+import select
 from rosgraph_msgs.msg import Clock
 from geometry_msgs.msg import PoseStamped
 from message_filters import Subscriber, ApproximateTimeSynchronizer
 from math import sqrt
-import sys
-import select
 from datetime import datetime
 
 # Global variables to store the latest poses and saved poses

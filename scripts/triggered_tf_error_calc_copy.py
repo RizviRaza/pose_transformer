@@ -103,6 +103,8 @@ def log_transform_and_errors(listener, parent_frame, goal_frame, drone_frame, av
             file.write("  Euclidean Distance Error: {:.4f}\n".format(euclidean_distance))
             file.write("  Rotational Error (Degrees): {:.4f}\n".format(rotational_error_deg))
 
+            rospy.loginfo("Euclidean Distance Error: {:.4f}\n".format(euclidean_distance))
+
         rospy.loginfo("Data successfully logged.")
     except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
         rospy.logwarn("TF Exception: {}".format(e))
